@@ -1,72 +1,77 @@
 {% extends 'base.html.njk' %}
 
-  {% block body %}
-    <header>
-      <h4>Alliphy Gallery</h4>
-      <img src="deerLogo.png" id="logo-img" alt="logo" />
-    </header>
+{% block body %}
+  <header>
+    <h4>Alliphy Gallery</h4>
+    <img src="deerLogo.png" id="logo-img" alt="logo"/>
+  </header>
 
-    <main>
-      <section id="landing-section-cont">
-        <div id="main-img-container">
-          <h1 id="gallery-title">Step Into Alliphy's Gallery</h1>
-          <img id="main-page-img" src="bigDoods.jpg" alt="watercolor-art" />
-        </div>
-      </section>
-
-      <div id="monthly-artist-text-cont">
-        <h2>Ft. Artist of the Month</h2>
-        <h3>Eva Przy Arts</h3>
+  <main>
+    <section id="landing-section-cont">
+      <div id="main-img-container">
+        <h1 id="gallery-title">Step Into Alliphy's Gallery</h1>
+        <img id="main-page-img" src="bigDoods.jpg" alt="watercolor-art"/>
       </div>
-      <section class="margin-top section-art-cont">
-        <div class="art-gallery-container">
-          <h3>Drawers to Wonderland</h3>
-          <img
+    </section>
+
+    <div id="monthly-artist-text-cont">
+      <h2>Ft. Artist of the Month</h2>
+      <h3>Eva Przy Arts</h3>
+    </div>
+    <section class="margin-top section-art-cont">
+      <div class="art-gallery-container">
+        <h3>Drawers to Wonderland</h3>
+        <img
             src="dresserArt.jpeg"
             id="first-artist-img"
             alt="painted-dresser"
-          />
-        </div>
-        <div class="art-gallery-container">
-          <h3>Have You Met the Lemon Trees?</h3>
-          <img
+/>
+      </div>
+      <div class="art-gallery-container">
+        <h3>Have You Met the Lemon Trees?</h3>
+        <img
             id="second-artist-img"
             class=""
             src="lemonBois.jpg"
             alt="watercolor-art"
-          />
-        </div>
-        <div class="art-gallery-container">
-          <h3>All Absorbing Snail</h3>
-          <img
+/>
+      </div>
+      <div class="art-gallery-container">
+        <h3>All Absorbing Snail</h3>
+        <img
             src="allAbsorbSnail.jpg"
             id="third-artist-img"
             alt="watercolor-art"
-          />
-        </div>
-      </section>
+/>
+      </div>
+    </section>
 
-      <form class="margin-top">
-        <div class="text-input-cont">
-          <div class="output-area"></div>
-          <label>Share Your Thoughts:</label>
-          <input
+    <form action="/submit-comment" method="post" class="margin-top">
+      <div class="text-input-cont">
+        <div class="output-area"></div>
+        <label>Share Your Thoughts:</label>
+        <input
             class="thought-input"
             type="textarea"
             name="comment"
             placeholder="Thoughts"
-          />
-          <button type="submit">></button>
-        </div>
-      </form>
-      <section class="margin-top">
-        <h2>Need Inspiration?</h2>
-        <input type="text" name="generate-img" />
-        <button type="submit">></button>
-      </section>
-    </main>
+/>
+        <input type="submit"/>
+        {% for comment in comments %}
+          <div>
+            <p>{{ comment.message }}</p>
+            <p>-{{ comment.author }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </form>
+    <section class="margin-top">
+      <img src={{ imageLink}}/>
+      <button id="inspiration-button" type="submit">Need Artistic Inspiration?</button>
+    </section>
+  </main>
 
-    <footer></footer>
+  <footer></footer>
 
 {% endblock %}
 </html>

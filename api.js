@@ -1,4 +1,4 @@
-(async function () {
+export async function fetchArtworkLink() {
   const url = "https://api.artic.edu/api/v1/artworks?fields=image_id,title";
   const res = await fetch(url, {
     headers: {
@@ -7,13 +7,13 @@
   });
 
   const { data } = await res.json();
-  console.log("data", data);
 
   const links = data.map((imageResponse) =>
     convertIdToImageLink(imageResponse.image_id)
   );
-  console.log(links);
-})();
+
+  return pickRandomThingFromList(links);
+}
 
 function convertIdToImageLink(id) {
   return `https://www.artic.edu/iiif/2/${id}/full/843,/0/default.jpg`;
