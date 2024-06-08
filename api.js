@@ -1,4 +1,4 @@
-export async function fetchArtworkLink() {
+export async function fetchArtworkImageIds() {
   const url = "https://api.artic.edu/api/v1/artworks?fields=image_id,title";
   const res = await fetch(url, {
     headers: {
@@ -8,18 +8,13 @@ export async function fetchArtworkLink() {
 
   const { data } = await res.json();
 
-  const links = data.map((imageResponse) =>
-    convertIdToImageLink(imageResponse.image_id)
-  );
+  const imageIds = data
+    .filter(
+      (imageResponse) =>
+        typeof imageResponse.image_id === "string" &&
+        imageResponse.image_id.length > 0
+    )
+    .map((imageResponse) => imageResponse.image_id);
 
-  return pickRandomThingFromList(links);
-}
-
-function convertIdToImageLink(id) {
-  return `https://www.artic.edu/iiif/2/${id}/full/843,/0/default.jpg`;
-}
-
-function pickRandomThingFromList(list) {
-  const chosenIndex = Math.ceil(Math.random() * list.length);
-  return list[chosenIndex];
+  return imageIds;
 }

@@ -14,35 +14,43 @@
       </div>
     </section>
 
-    <div id="monthly-artist-text-cont">
-      <h2>Ft. Artist of the Month</h2>
+    <div class="margin-top" id="monthly-artist-text-cont">
+      <h2>Featured Artist of the Month</h2>
       <h3>Eva Przy Arts</h3>
     </div>
     <section class="margin-top section-art-cont">
       <div class="art-gallery-container">
         <h3>Drawers to Wonderland</h3>
-        <img
+        <div class="frame">
+          <img
             src="dresserArt.jpeg"
             id="first-artist-img"
             alt="painted-dresser"
 />
+        </div>
       </div>
       <div class="art-gallery-container">
         <h3>Have You Met the Lemon Trees?</h3>
-        <img
+        <div class="frame">
+
+          <img
             id="second-artist-img"
             class=""
             src="lemonBois.jpg"
             alt="watercolor-art"
 />
+        </div>
       </div>
       <div class="art-gallery-container">
         <h3>All Absorbing Snail</h3>
-        <img
+        <div class="frame">
+
+          <img
             src="allAbsorbSnail.jpg"
             id="third-artist-img"
             alt="watercolor-art"
 />
+        </div>
       </div>
     </section>
 
@@ -65,13 +73,48 @@
         {% endfor %}
       </div>
     </form>
-    <section class="margin-top">
-      <img src={{ imageLink}}/>
-      <button id="inspiration-button" type="submit">Need Artistic Inspiration?</button>
+    <section class="inspiration" class="margin-top">
+      <button id="inspiration-button">Need Artistic Inspiration?</button>
+      <img id="inspiration-image" src=""/>
     </section>
   </main>
 
-  <footer></footer>
+  <footer>
+    <h4>©AlliphyStudios 2024</h4>
+    <h4>Contact Alliphy: evaprzyarts@gmail.com</h4>
+  </footer>
+
+  <script>
+
+    let lastImageIndex;
+
+    const ids = "{{imageIds}}".split(',')
+    const inspirationImg = document.getElementById("inspiration-image");
+    const inspirationBtn = document.getElementById("inspiration-button");
+
+    inspirationImg.src = convertIdToImageLink(pickRandomThingFromList(ids))
+
+    inspirationBtn.addEventListener("click", () => {
+
+      inspirationImg.src = convertIdToImageLink(pickRandomThingFromList(ids))
+
+    })
+
+    function pickRandomThingFromList(list) {
+      const chosenIndex = Math.ceil(Math.random() * list.length - 1);
+
+      if (lastImageIndex === chosenIndex) {
+        return pickRandomThingFromList(list)
+      }
+
+      lastImageIndex = chosenIndex;
+      return list[chosenIndex];
+    }
+
+    function convertIdToImageLink(id) {
+      return `https://www.artic.edu/iiif/2/${id}/full/843,/0/default.jpg`;
+    }
+  </script>
 
 {% endblock %}
 </html>

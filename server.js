@@ -2,17 +2,12 @@ import express from "express";
 import session from "express-session";
 import morgan from "morgan";
 import nunjucks from "nunjucks";
-import { fetchArtworkLink } from "./api.js";
+import { fetchArtworkImageIds } from "./api.js";
 
 const app = express();
 const port = "4090";
 
-const allComments = [
-  {
-    message: "",
-    author: "",
-  },
-];
+const allComments = [];
 
 // Middleware
 app.use(morgan("dev"));
@@ -33,9 +28,9 @@ nunjucks.configure("views", {
 });
 
 app.get("/", async (req, res) => {
-  const link = await fetchArtworkLink();
+  const ids = await fetchArtworkImageIds();
   const props = {
-    imageLink: link,
+    imageIds: ids,
     comments: allComments,
   };
   res.render("index.html.njk", props);
@@ -53,7 +48,9 @@ app.post("/submit-comment", async (req, res) => {
   const props = {
     comments: allComments,
   };
-  res.render("index.html.njk", props);
+  // res.render("index.html.njk", props);
+
+  res.redirect("/");
 });
 
 app.listen(port, () => {
